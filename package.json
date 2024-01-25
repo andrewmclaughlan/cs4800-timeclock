@@ -40,6 +40,6 @@
     ]
   },
   "devDependencies": {
-    "electron": "^28.1.3"
+    "electron": "^28.2.0"
   }
 }
