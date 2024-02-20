@@ -1,5 +1,6 @@
 import React from "react";
 import Keypad from './keypad.jsx';
+import TimeRequest from './time-request.jsx';
 import {
     ChakraProvider,
     Tabs,
@@ -29,7 +30,7 @@ import {
               <TabPanel>
                 <Keypad />
               </TabPanel>
-              <TabPanel>Time Requests</TabPanel>
+              <TabPanel><TimeRequest /></TabPanel>
               <TabPanel>Hours</TabPanel>
               <TabPanel>Admin</TabPanel>
             </TabPanels>
