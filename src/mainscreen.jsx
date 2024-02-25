@@ -1,5 +1,7 @@
 import React from "react";
 import Keypad from './keypad.jsx';
+import TimeRequest from './time-request.jsx';
+import Hours from './hours.jsx'
 import {
     ChakraProvider,
     Tabs,
@@ -7,9 +9,8 @@ import {
     TabPanels,
     Tab,
     TabPanel,
-    Heading
+    Heading,
   } from '@chakra-ui/react'
-  
   export function MainScreen() {
     return(
         <ChakraProvider resetCSS>
@@ -29,8 +30,12 @@ import {
               <TabPanel>
                 <Keypad />
               </TabPanel>
-              <TabPanel>Time Requests</TabPanel>
-              <TabPanel>Hours</TabPanel>
+              <TabPanel>
+              <TimeRequest />  
+              </TabPanel>
+              <TabPanel>
+                <Hours />
+              </TabPanel>
               <TabPanel>Admin</TabPanel>
             </TabPanels>
           </Tabs>
