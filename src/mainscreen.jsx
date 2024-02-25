@@ -9,9 +9,8 @@ import {
     TabPanels,
     Tab,
     TabPanel,
-    Heading
+    Heading,
   } from '@chakra-ui/react'
-  
   export function MainScreen() {
     return(
         <ChakraProvider resetCSS>
