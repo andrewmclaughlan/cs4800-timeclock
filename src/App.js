@@ -1,10 +1,10 @@
-import logo from './logo.svg';
 import './App.css';
-import Keypad from './keypad.jsx';
+import { MainScreen } from './mainscreen.jsx';
+
 function App() {
   return (
     <div className="App">
-      <Keypad />
+      <MainScreen />
     </div>
   );
 }
