@@ -1,5 +1,5 @@
 // Modules to control application life and create native browser window
-const { app, BrowserWindow } = require("electron");
+const { app, BrowserWindow, ipcMain } = require("electron");
 const path = require("path");
 const express = require("express");
 const cors = require("cors");
@@ -14,17 +14,13 @@ const startLocalServer = (done) => {
     done();
   });
 };
-//Database setup
-const sqlite3 = require('sqlite3');
-const database = new sqlite3.Database('./public/db.sqlite3', (err) => {
-  if (err) console.error('Database opening error: ', err);
+//<Database setup>
+const { channels } = require('./src/shared/constants');
+ipcMain.on(channels.GET_DATA, (event, arg) => {
+  const { product } = arg;
+  console.log(product);
 });
-ipcMain.on('asynchronous-message', (event, arg) => {
-  const sql = arg;
-  database.all(sql, (err, rows) => {
-      event.reply('asynchronous-reply', (err && err.message) || rows);
-  });
-});
+//</Database setup>
 function createWindow() {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
