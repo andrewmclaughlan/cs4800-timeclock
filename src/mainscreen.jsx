@@ -10,7 +10,9 @@ import {
     Tab,
     TabPanel,
     Heading,
+    Button,
   } from '@chakra-ui/react'
+ 
   export function MainScreen() {
     return(
         <ChakraProvider resetCSS>
@@ -39,6 +41,7 @@ import {
               <TabPanel>Admin</TabPanel>
             </TabPanels>
           </Tabs>
+          <Button onClick={() =>{window.api.testDatabase();}}>Quit</Button>
         </ChakraProvider>
       );
   }

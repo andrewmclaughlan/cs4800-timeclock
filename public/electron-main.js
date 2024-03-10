@@ -3,6 +3,7 @@ const { app, BrowserWindow, ipcMain } = require("electron");
 const path = require("path");
 const express = require("express");
 const cors = require("cors");
+const { db, testDatabase } = require("./database-stuff");
 const localServerApp = express();
 const PORT = 8088;
 const startLocalServer = (done) => {
@@ -15,11 +16,9 @@ const startLocalServer = (done) => {
   });
 };
 //<Database setup>
-const { channels } = require('./src/shared/constants');
-ipcMain.on(channels.GET_DATA, (event, arg) => {
-  const { product } = arg;
-  console.log(product);
-});
+ipcMain.on('test-database', (args) => {
+  db;
+})
 //</Database setup>
 function createWindow() {
   // Create the browser window.
@@ -28,6 +27,8 @@ function createWindow() {
     height: 600,
     webPreferences: {
       preload: path.join(__dirname, "preload.js"),
+      nodeIntegration: true,
+      contextIsolation: true,
     },
   });
 

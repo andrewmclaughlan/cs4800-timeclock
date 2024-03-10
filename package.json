@@ -2,7 +2,7 @@
   "name": "timeclock",
   "version": "0.1.0",
   "private": true,
-  "main": "electron-main.js",
+  "main": "public/electron-main.js",
   "dependencies": {
     "@chakra-ui/icons": "^2.1.1",
     "@chakra-ui/react": "^2.8.2",
@@ -14,7 +14,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-scripts": "5.0.1",
-    "sqlite3": "^5.1.7",
+    "sqlite3": "https://github.com/mapbox/node-sqlite3/tarball/master",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
