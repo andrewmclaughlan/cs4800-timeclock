@@ -10,6 +10,7 @@ import {
     Tab,
     TabPanel,
     Heading,
+    Button
   } from '@chakra-ui/react'
   export function MainScreen() {
     return(
@@ -39,6 +40,7 @@ import {
               <TabPanel>Admin</TabPanel>
             </TabPanels>
           </Tabs>
+          <Button onclick={() =>{window.api.testDatabase()}}>Test DB</Button>
         </ChakraProvider>
       );
   }

@@ -1,5 +1,5 @@
 // Modules to control application life and create native browser window
-const { app, BrowserWindow } = require("electron");
+const { app, BrowserWindow, ipcMain } = require("electron");
 const path = require("path");
 const express = require("express");
 const cors = require("cors");
@@ -14,7 +14,12 @@ const startLocalServer = (done) => {
     done();
   });
 };
-
+//<Database Test>
+const { db } = require("./public/database-stuff");
+ipcMain.on('test-database', (args) => {
+  db;
+})
+//</Database Test>
 function createWindow() {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
