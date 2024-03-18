@@ -10,8 +10,12 @@ import {
     Tab,
     TabPanel,
     Heading,
-    Button
+    Button,
+    Container
   } from '@chakra-ui/react'
+  function testButtonEvent() {
+    window.api.testDatabase();
+  }
   export function MainScreen() {
     return(
         <ChakraProvider resetCSS>
@@ -40,8 +44,11 @@ import {
               <TabPanel>Admin</TabPanel>
             </TabPanels>
           </Tabs>
-          <Button onclick={() =>{window.api.testDatabase()}}>Test DB</Button>
+          <Container>
+            <Button onClick={() => {window.api.quitApp()}}>Quit</Button>
+            <Button onClick={testButtonEvent}>Test DB</Button>
+          </Container>
+          
         </ChakraProvider>
       );
   }
-  

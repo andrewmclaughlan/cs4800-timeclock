@@ -15,10 +15,11 @@ const startLocalServer = (done) => {
   });
 };
 //<Database Test>
-const { db } = require("./public/database-stuff");
-ipcMain.on('test-database', (args) => {
-  db;
+ipcMain.on('quit-app', (args) => {
+  app.quit();
 })
+const testDatabase = require("./database-stuff");
+ipcMain.on('test-database', testDatabase);
 //</Database Test>
 function createWindow() {
   // Create the browser window.
@@ -43,7 +44,7 @@ function createWindow() {
 // Some APIs can only be used after this event occurs.
 app.whenReady().then(() => {
   startLocalServer(createWindow);
-
+  
   app.on("activate", function () {
     // On macOS it's common to re-create a window in the app when the
     // dock icon is clicked and there are no other windows open.
