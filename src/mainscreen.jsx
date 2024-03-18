@@ -13,8 +13,11 @@ import {
     Button,
     Container
   } from '@chakra-ui/react'
-  function testButtonEvent() {
-    window.api.testDatabase();
+  async function testButtonEvent() {
+    //window.api.testDatabase();
+    let query = "SELECT DESCRIPTION desc FROM USERTYPE";
+    let data = await window.api.testDatabaseReceive({query : query});
+    console.log(data);
   }
   export function MainScreen() {
     return(

@@ -20,6 +20,10 @@ ipcMain.on('quit-app', (args) => {
 })
 const testDatabase = require("./database-stuff");
 ipcMain.on('test-database', testDatabase);
+const testReceive = require("./database-stuff");
+ipcMain.handle('testdb-receive', (args) => {
+  return testReceive(args.query);
+})
 //</Database Test>
 function createWindow() {
   // Create the browser window.
