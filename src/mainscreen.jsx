@@ -15,9 +15,10 @@ import {
   } from '@chakra-ui/react'
   async function testButtonEvent() {
     //window.api.testDatabase();
-    let query = "SELECT DESCRIPTION desc FROM USERTYPE";
+    let query = "SELECT * FROM USERTYPE";
     let data = await window.api.testDatabaseReceive({query : query});
     console.log(data);
+    console.log(data.description);
   }
   export function MainScreen() {
     return(

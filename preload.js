@@ -11,5 +11,5 @@ contextBridge.exposeInMainWorld('api', {
   quitApp: (args) => ipcRenderer.send('quit-app', args),
 
   testDatabase: () => ipcRenderer.send('test-database'),
-  testDatabaseReceive: (args) => ipcRenderer.invoke('testdb-receive', args)
+  testDatabaseReceive: (query) => ipcRenderer.invoke('testdb-receive', query)
 });

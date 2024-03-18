@@ -1,5 +1,5 @@
-const sqlite3 = require('sqlite3').verbose();
 
+const sqlite3 = require('sqlite3').verbose();
 /*const db = new sqlite3.Database('./public/timeclock.db', (err) => {
     if (err) {
       return console.error(err.message);
@@ -25,23 +25,39 @@ function testDatabase() {
       });
       db.close;
 }
-function testReceive({query}) {
-  let desc;
+async function testReceive(query) {
+  //console.log(query);
   let db = new sqlite3.Database('./timeclock.db', (err) => {
       if (err) {
         return console.error(err.message);
       }
       console.log('Connected to the timeclock.db SQlite database.');
     });
-    db.get(query, [], (err, row) => {
+    var descript = 'This shouldnt be here';
+    descript = new Promise((resolve, reject) => {
+      db.all(query, async (err, row) => {
+        if (err) {
+          reject(err);
+        }
+        resolve(row);
+      });
+    });
+    /*db.get('SELECT DESCRIPTION desc FROM USERTYPE', async (err, row) => {
       if (err) {
         return console.error(err.message);
       }
-      desc = row.desc;
+      console.log((typeof row.desc))
       console.log(row.desc);
+      descript = row.desc;
     });
-    console.log(desc);
+    */
+    /*
+    const task = db.prepare('SELECT * FROM USERTYPE');
+    descript = task.all();
+    console.log(task.all());*/
+    console.log(descript);
     db.close;
-    return desc;
+    return descript;
+    
 }
-module.exports = testDatabase, testReceive;
+module.exports = testReceive;

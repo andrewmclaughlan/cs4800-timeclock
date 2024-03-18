@@ -18,11 +18,12 @@ const startLocalServer = (done) => {
 ipcMain.on('quit-app', (args) => {
   app.quit();
 })
-const testDatabase = require("./database-stuff");
-ipcMain.on('test-database', testDatabase);
-const testReceive = require("./database-stuff");
+//const testDatabase = require("./database-stuff");
+//ipcMain.on('test-database', testDatabase);
+const testReceive = require("./db/database-stuff");
 ipcMain.handle('testdb-receive', (args) => {
-  return testReceive(args.query);
+  console.log(args);
+  return testReceive('SELECT * FROM USERTYPE');
 })
 //</Database Test>
 function createWindow() {
