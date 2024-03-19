@@ -16,9 +16,10 @@ import {
   async function testButtonEvent() {
     //window.api.testDatabase();
     let query = "SELECT * FROM USERTYPE";
-    let data = await window.api.testDatabaseReceive({query : query});
+    let data = await window.api.testDatabaseReceive(query);
     console.log(data);
-    console.log(data.description);
+    console.log(data[0]);
+    console.log(data[0].description);
   }
   export function MainScreen() {
     return(

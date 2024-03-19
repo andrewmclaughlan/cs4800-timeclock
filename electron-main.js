@@ -21,9 +21,9 @@ ipcMain.on('quit-app', (args) => {
 //const testDatabase = require("./database-stuff");
 //ipcMain.on('test-database', testDatabase);
 const testReceive = require("./db/database-stuff");
-ipcMain.handle('testdb-receive', (args) => {
-  console.log(args);
-  return testReceive('SELECT * FROM USERTYPE');
+ipcMain.handle('testdb-receive', (event, query) => {
+  console.log(query);
+  return testReceive(query);
 })
 //</Database Test>
 function createWindow() {
