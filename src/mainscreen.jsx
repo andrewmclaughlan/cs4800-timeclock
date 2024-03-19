@@ -10,7 +10,24 @@ import {
     Tab,
     TabPanel,
     Heading,
+    Button,
+    Container
   } from '@chakra-ui/react'
+  async function testButtonEvent() {
+    //window.api.testDatabase();
+    let query = "SELECT DESCRIPTION FROM USERTYPE WHERE USERTYPENAME = 'SUPER'";
+    let data = await window.api.testDatabaseReceive(query);
+    console.log(data);
+    console.log(data[0]);
+    console.log(data[0].description);
+  }
+  async function testButtonEvent2() {
+    let query = "INSERT INTO USER(firstName, lastName, pin, totalHours, userTypeName) Values('SUPER', 'SUPER', 88888888, 0, 'SUPER')";
+    window.api.insertData(query);
+    let query2 = "SELECT * FROM USER WHERE USERTYPENAME = 'SUPER'";
+    let data = await window.api.selectData(query2);
+    console.log(data);
+  }
   export function MainScreen() {
     return(
         <ChakraProvider resetCSS>
@@ -39,7 +56,12 @@ import {
               <TabPanel>Admin</TabPanel>
             </TabPanels>
           </Tabs>
+          <Container>
+            <Button onClick={() => {window.api.quitApp()}}>Quit</Button>
+            <Button onClick={testButtonEvent}>Test DB</Button>
+            <Button onClick={testButtonEvent2}>Test InsertData</Button>
+          </Container>
+          
         </ChakraProvider>
       );
   }
-  

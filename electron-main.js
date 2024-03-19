@@ -1,5 +1,5 @@
 // Modules to control application life and create native browser window
-const { app, BrowserWindow } = require("electron");
+const { app, BrowserWindow, ipcMain } = require("electron");
 const path = require("path");
 const express = require("express");
 const cors = require("cors");
@@ -38,7 +38,7 @@ function createWindow() {
 // Some APIs can only be used after this event occurs.
 app.whenReady().then(() => {
   startLocalServer(createWindow);
-
+  
   app.on("activate", function () {
     // On macOS it's common to re-create a window in the app when the
     // dock icon is clicked and there are no other windows open.
@@ -55,3 +55,33 @@ app.on("window-all-closed", function () {
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
+//<Database Test>
+ipcMain.on('quit-app', (args) => {
+  app.quit();
+})
+//const testDatabase = require("./database-stuff");
+//ipcMain.on('test-database', testDatabase);
+const testReceive = require("./db/database-stuff");
+ipcMain.handle('testdb-receive', (event, query) => {
+  console.log(query);
+  return testReceive(query);
+});
+//</Database Test>
+
+//Database Stuff
+const selectData = require('./db/selectData');
+ipcMain.handle('select-data', (event, query) => {
+  return selectData(query);
+});
+const insertData = require('./db/insertData');
+ipcMain.handle('insert-data', (event, query) => {
+  return insertData(query);
+});
+const updateData = require('./db/updateData');
+ipcMain.handle('update-data', (event, query) => {
+  return updateData(query);
+});
+const deleteData = require('./db/deleteData');
+ipcMain.handle('delete-data', (event, query) => {
+  return deleteData(query);
+});
