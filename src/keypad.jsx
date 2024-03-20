@@ -10,12 +10,9 @@ import {
   InputGroup,
   Text
 } from '@chakra-ui/react'
-import { emptyObject } from '@jest/expect-utils';
 import { isEmptyArray } from '@chakra-ui/utils';
-import { isEmpty } from 'lodash';
 //This is a functional keypad with test data
 export default function Keypad () {
-  const pins = ['123', '1234', '88888888', '1111', '1234567890'];
   const maxPinLength = 8;
   const [pin, setPin] = useState('');
   const[punchMessage, setPunchMessage] = useState();
@@ -87,6 +84,7 @@ export default function Keypad () {
           var punch = false;
           if(pin.length >= 4 && await checkPin(pin)) {
             punch = true;
+            clockIn(pin);
           }
           if(punch) setPunchMessage(<Text backgroundColor="whatsapp.100">Clock Out Successful!</Text>);
           else setPunchMessage(<Text backgroundColor="red.200">Clock Out Failed!</Text>);
@@ -103,5 +101,13 @@ async function checkPin(pin) {
   let query = "SELECT PIN FROM USER WHERE PIN = " + pin;
   let result = await window.api.selectData(query);
   return !isEmptyArray(result);
+}
+async function clockIn(pin) {
+  var datetime = new Date();
+  var query = "SELECT USERID FROM USER WHERE PIN = " + pin;
+  var result =  await window.api.selectData(query);
+  query = "INSERT INTO TIMERECORDS(START, TIMECODE, HOURS, USERID) VALUES('"+ datetime.toDateString() +"', 'PUNCH', 0, (SELECT USERID FROM USER WHERE PIN = " + pin +")";
+  await window.api.insertData(query);
+
 }
 
