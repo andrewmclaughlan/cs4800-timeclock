@@ -24,10 +24,11 @@ export default function Keypad () {
 
     return () => clearInterval(intervalId);
   }, []);
+  
    return (
     <ChakraProvider resetCSS><Container>
     <InputGroup display="inline-block">
-      <Text>{date.toLocaleTimeString()}</Text>
+      <Text>{date.toLocaleDateString() + " " + date.toLocaleTimeString()}</Text>
       {punchMessage}
       <Input type='text' readOnly variant="outline" size="lg"  value={pin} onChange={e => setPin(e.target.value)}/>
       <Grid templateColumns="repeat(3, 1fr)" gap={6} column={3} row={4}>
@@ -73,6 +74,7 @@ export default function Keypad () {
           var punch = false;
           if(pin.length >= 4 && await checkPin(pin)) {
             punch = true;
+            await clockIn(pin);
           }
           
           if(punch) setPunchMessage(<Text backgroundColor="whatsapp.100">Clock In Successful!</Text>);
@@ -84,7 +86,7 @@ export default function Keypad () {
           var punch = false;
           if(pin.length >= 4 && await checkPin(pin)) {
             punch = true;
-            clockIn(pin);
+            
           }
           if(punch) setPunchMessage(<Text backgroundColor="whatsapp.100">Clock Out Successful!</Text>);
           else setPunchMessage(<Text backgroundColor="red.200">Clock Out Failed!</Text>);
@@ -106,7 +108,7 @@ async function clockIn(pin) {
   var datetime = new Date();
   var query = "SELECT USERID FROM USER WHERE PIN = " + pin;
   var result =  await window.api.selectData(query);
-  query = "INSERT INTO TIMERECORDS(START, TIMECODE, HOURS, USERID) VALUES('"+ datetime.toDateString() +"', 'PUNCH', 0, (SELECT USERID FROM USER WHERE PIN = " + pin +")";
+  query = "INSERT INTO TIMERECORDS(START, TIMECODE, HOURS, USERID) VALUES('"+ datetime.toISOString() +"', 'PUNCH', 0, "+ result[0].userId+")";
   await window.api.insertData(query);
 
 }
