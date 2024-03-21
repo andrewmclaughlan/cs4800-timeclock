@@ -24,7 +24,7 @@ export default function Keypad () {
 
     return () => clearInterval(intervalId);
   }, []);
-  
+
    return (
     <ChakraProvider resetCSS><Container>
     <InputGroup display="inline-block">
@@ -86,7 +86,7 @@ export default function Keypad () {
           var punch = false;
           if(pin.length >= 4 && await checkPin(pin)) {
             punch = true;
-            
+            await clockOut(pin);
           }
           if(punch) setPunchMessage(<Text backgroundColor="whatsapp.100">Clock Out Successful!</Text>);
           else setPunchMessage(<Text backgroundColor="red.200">Clock Out Failed!</Text>);
@@ -111,5 +111,16 @@ async function clockIn(pin) {
   query = "INSERT INTO TIMERECORDS(START, TIMECODE, HOURS, USERID) VALUES('"+ datetime.toISOString() +"', 'PUNCH', 0, "+ result[0].userId+")";
   await window.api.insertData(query);
 
+}
+async function clockOut(pin) {
+  var query = "SELECT USERID FROM USER WHERE PIN = " + pin;
+  var resultUserID =  await window.api.selectData(query);
+  query = "SELECT * FROM TIMERECORDS WHERE USERID = " + resultUserID[0].userId + " AND END IS NULL";
+  var resultTimeRecords = await window.api.selectData(query);
+  let start = new Date(resultTimeRecords[0].start);
+  let end = new Date();
+  let hours = Math.abs(end.getHours() - start.getHours());
+  query = "UPDATE TIMERECORDS SET END = '" +  end.toISOString() + "', HOURS = " + hours + " WHERE TIMERECORDSID = " + resultTimeRecords[0].timeRecordsID;
+  await window.api.updateData(query);
 }
 
