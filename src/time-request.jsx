@@ -21,24 +21,29 @@ export default function TimeRequest() {
 <ChakraProvider resetCSS>
     <Grid templateColumns="repeat(2, 1fr)" gap={6} templateRows="repeat(5, 4)" margin={15}>
       <Text>Start Date and Time:</Text>
-      <Input type='datetime-local' onChange={e => ( setStart(e.target.value))}/>
+      <Input value={start} type='datetime-local' onChange={e => ( setStart(e.target.value))}/>
       <Text>End Date and Time</Text>
-      <Input type='datetime-local' onChange={e => (setEnd(e.target.value))}/>
+      <Input value={end} type='datetime-local' onChange={e => (setEnd(e.target.value))}/>
     </Grid>
 
     <Grid templateColumns="repeat(2, 3fr)" gap={6} margin={15}>
       <Text>Hours</Text>
-      <Input type='number' min={0} max={1000} step={1} onChange={e => (setHours(e.target.value))}/>
+      <Input value={hours} type='number' min={0} max={1000} step={1} onChange={e => (setHours(e.target.value))}/>
       <Text>Request Code</Text>
-      <Input type='text' onChange={e => (setRequestCode(e.target.value))}/>
+      <Input value={requestCode} type='text' onChange={e => (setRequestCode(e.target.value))}/>
       <Text>Pin</Text>
-      <Input type='password' minLength={4} maxLength={8} onChange={e => (setPin(e.target.value))}/>
+      <Input value={pin} type='password' minLength={4} maxLength={8} onChange={e => (setPin(e.target.value))}/>
     </Grid>
     <Container display="flex" flexDirection="row-reverse" justifyContent="flex-start" alignItems="stretch" minWidth="100%" margin={15}>
       <Button variant="solid" size="md" ml={15} mr={15} onClick={async () => {
         let result = await submitButtonHandler(start, end, hours, requestCode, pin);
         if(result === 0) { 
-          setSubmitMessage(<Text backgroundColor="whatsapp.100">Time Request was Successfully Submitted!</Text>); 
+          setSubmitMessage(<Text backgroundColor="whatsapp.100">Time Request was Successfully Submitted!</Text>);
+          setStart('');
+          setEnd('');
+          setEnd('');
+          setRequestCode('');
+          setPin(''); 
         }
         if(result === 1) setSubmitMessage(<Text backgroundColor="red.200">Pin was invalid!</Text>);
         if(result === 2) setSubmitMessage(<Text backgroundColor="red.200">1 or more fields were not filled in!</Text>);

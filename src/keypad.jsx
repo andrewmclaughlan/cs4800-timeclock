@@ -72,6 +72,12 @@ export default function Keypad () {
       <Container display="flex" flexDirection="column">
           <Button variant="solid" size="lg" colorScheme="linkedin" m={2} onClick={async ()=> {
           var punch = false;
+          if(pin === undefined) {
+            if(pin.length >= 4 && await checkPin(pin)) {
+              punch = true;
+              await clockIn(pin);
+            }
+          }
           if(pin.length >= 4 && await checkPin(pin)) {
             punch = true;
             await clockIn(pin);
@@ -79,17 +85,21 @@ export default function Keypad () {
           
           if(punch) setPunchMessage(<Text backgroundColor="whatsapp.100">Clock In Successful!</Text>);
           else setPunchMessage(<Text backgroundColor="red.200">Clock In Failed!</Text>);
+          setPin('');
         }}>
             Clock In
           </Button>
           <Button variant="solid" size="lg" colorScheme="linkedin" m={2} onClick={async ()=> {
           var punch = false;
-          if(pin.length >= 4 && await checkPin(pin)) {
-            punch = true;
-            await clockOut(pin);
+          if(pin === undefined) {
+            if(pin.length >= 4 && await checkPin(pin)) {
+              punch = true;
+              await clockOut(pin);
+            }
           }
           if(punch) setPunchMessage(<Text backgroundColor="whatsapp.100">Clock Out Successful!</Text>);
           else setPunchMessage(<Text backgroundColor="red.200">Clock Out Failed!</Text>);
+          setPin('');
         }}>
             Clock Out
           </Button>
