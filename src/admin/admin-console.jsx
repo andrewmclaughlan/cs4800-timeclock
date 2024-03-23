@@ -57,7 +57,7 @@ export default function AdminConsole() {
     );
 }
 async function checkAdminPin(pin) {
-  let query = "SELECT PIN FROM USER WHERE (USERTYPENAME = 'SUPER' OR 'ADMIN') AND PIN = " + pin;
+  let query = "SELECT PIN FROM USER WHERE (USERTYPENAME = 'SUPER' OR USERTYPENAME = 'ADMIN') AND PIN = " + pin;
   let result = await window.api.selectData(query);
   return !isEmptyArray(result);
 }
