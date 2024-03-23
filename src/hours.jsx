@@ -12,7 +12,6 @@ import {
 import { isEmptyArray } from '@chakra-ui/utils';
 
 export default function Hours() {
-  //const hours = 100;
   const [pin, setPin] = useState();
   const [recordsTable, setRecordsTable] = useState();
   const [hours, setHours] = useState();
