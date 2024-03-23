@@ -39,11 +39,6 @@ export default function TimeRequest() {
         let result = await submitButtonHandler(start, end, hours, requestCode, pin);
         if(result === 0) { 
           setSubmitMessage(<Text backgroundColor="whatsapp.100">Time Request was Successfully Submitted!</Text>);
-          setStart('');
-          setEnd('');
-          setEnd('');
-          setRequestCode('');
-          setPin(''); 
         }
         if(result === 1) setSubmitMessage(<Text backgroundColor="red.200">Pin was invalid!</Text>);
         if(result === 2) setSubmitMessage(<Text backgroundColor="red.200">1 or more fields were not filled in!</Text>);

@@ -28,7 +28,7 @@ export default function Hours() {
             setRecordsTable(await showRecords(pin));
             setHours(await showHours(pin));
             setErrorMessage("");
-            setPin(undefined);
+            setPin("");
           }
           else {
             setErrorMessage(<Text backgroundColor="red.200">Pin was invalid!</Text>);

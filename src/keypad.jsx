@@ -72,7 +72,7 @@ export default function Keypad () {
       <Container display="flex" flexDirection="column">
           <Button variant="solid" size="lg" colorScheme="linkedin" m={2} onClick={async ()=> {
           var punch = false;
-          if(pin === undefined) {
+          if(!(pin === undefined)) {
             if(pin.length >= 4 && await checkPin(pin)) {
               punch = true;
               await clockIn(pin);
@@ -85,13 +85,13 @@ export default function Keypad () {
           
           if(punch) setPunchMessage(<Text backgroundColor="whatsapp.100">Clock In Successful!</Text>);
           else setPunchMessage(<Text backgroundColor="red.200">Clock In Failed!</Text>);
-          setPin('');
+          
         }}>
             Clock In
           </Button>
           <Button variant="solid" size="lg" colorScheme="linkedin" m={2} onClick={async ()=> {
           var punch = false;
-          if(pin === undefined) {
+          if(!(pin === undefined)) {
             if(pin.length >= 4 && await checkPin(pin)) {
               punch = true;
               await clockOut(pin);
@@ -99,7 +99,7 @@ export default function Keypad () {
           }
           if(punch) setPunchMessage(<Text backgroundColor="whatsapp.100">Clock Out Successful!</Text>);
           else setPunchMessage(<Text backgroundColor="red.200">Clock Out Failed!</Text>);
-          setPin('');
+          
         }}>
             Clock Out
           </Button>
@@ -127,10 +127,21 @@ async function clockOut(pin) {
   var resultUserID =  await window.api.selectData(query);
   query = "SELECT * FROM TIMERECORDS WHERE USERID = " + resultUserID[0].userId + " AND END IS NULL";
   var resultTimeRecords = await window.api.selectData(query);
-  let start = new Date(resultTimeRecords[0].start);
-  let end = new Date();
-  let hours = Math.abs(end.getHours() - start.getHours());
-  query = "UPDATE TIMERECORDS SET END = '" +  end.toISOString() + "', HOURS = " + hours + " WHERE TIMERECORDSID = " + resultTimeRecords[0].timeRecordsID;
-  await window.api.updateData(query);
+  if(!isEmptyArray(resultTimeRecords)){
+    let start = new Date(resultTimeRecords[0].start);
+    let end = new Date();
+    let hours = Math.abs(end.getHours() - start.getHours());
+    query = "UPDATE TIMERECORDS SET END = '" +  end.toISOString() + "', HOURS = " + hours + " WHERE TIMERECORDSID = " + resultTimeRecords[0].timeRecordsID;
+    await window.api.updateData(query);
+  }
+  else {
+    let start = new Date();
+    let end = new Date();
+    let hours = Math.abs(end.getHours() - start.getHours());
+    query = "INSERT INTO TIMERECORDS(START, END, TIMECODE, HOURS, USERID)"
+        +" VALUES('"+ start.toISOString() +"', '" + end.toISOString() + "', 'PUNCH', " + hours + ", "+ resultUserID[0].userId+")";
+    await window.api.insertData(query);
+  }
+  
 }
 
