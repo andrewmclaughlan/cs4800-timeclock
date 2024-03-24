@@ -30,7 +30,7 @@ export default function Keypad () {
     <InputGroup display="inline-block">
       <Text>{date.toLocaleDateString() + " " + date.toLocaleTimeString()}</Text>
       {punchMessage}
-      <Input type='text' readOnly variant="outline" size="lg"  value={pin} onChange={e => setPin(e.target.value)}/>
+      <Input type='password' readOnly variant="outline" size="lg"  value={pin} onChange={e => setPin(e.target.value)}/>
       <Grid templateColumns="repeat(3, 1fr)" gap={6} column={3} row={4}>
         <Button variant="solid" size="md" onClick={() => {(pin.length < maxPinLength) ? setPin(pin + '1') : setPin(pin)}}>
           1
@@ -72,12 +72,6 @@ export default function Keypad () {
       <Container display="flex" flexDirection="column">
           <Button variant="solid" size="lg" colorScheme="linkedin" m={2} onClick={async ()=> {
           var punch = false;
-          if(!(pin === undefined)) {
-            if(pin.length >= 4 && await checkPin(pin)) {
-              punch = true;
-              await clockIn(pin);
-            }
-          }
           if(pin.length >= 4 && await checkPin(pin)) {
             punch = true;
             await clockIn(pin);
