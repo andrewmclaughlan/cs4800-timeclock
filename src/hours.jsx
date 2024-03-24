@@ -93,7 +93,7 @@ async function showHours(pin) {
   return result[0].totalHours;
 }
 async function checkPin(pin) {
-  let query = "SELECT PIN FROM USER WHERE PIN = " + pin;
+  let query = "SELECT PIN FROM USER WHERE NOT USERTYPENAME = 'SUPER' AND PIN = " + pin;
   let result = await window.api.selectData(query);
   return !isEmptyArray(result);
 }

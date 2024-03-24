@@ -23,7 +23,7 @@ export default function EditUserTypeSection() {
               <Text>User Pin:</Text>
               <Input value={userPin} type='password' maxLength={8} onChange={e => (setUserPin(e.target.value))}/>
               <Button variant="solid" size="md" colorScheme="linkedin" onClick={ async () => {
-                if(!(superPin === undefined || userPin === undefined)) {
+                if(!(superPin === undefined || userPin === undefined || superPin === "" || userPin === "")) {
                   if(superPin.length >= 4 && /^\d+$/.test(superPin) && await checkSuperPin(superPin)) {
                     if(userPin.length >= 4 && /^\d+$/.test(userPin)) {
                       let result = await checkUserType(userPin);
