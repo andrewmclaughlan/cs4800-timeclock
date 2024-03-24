@@ -12,7 +12,6 @@ import {
 import { isEmptyArray } from '@chakra-ui/utils';
 
 export default function Hours() {
-  //const hours = 100;
   const [pin, setPin] = useState();
   const [recordsTable, setRecordsTable] = useState();
   const [hours, setHours] = useState();
@@ -94,7 +93,7 @@ async function showHours(pin) {
   return result[0].totalHours;
 }
 async function checkPin(pin) {
-  let query = "SELECT PIN FROM USER WHERE PIN = " + pin;
+  let query = "SELECT PIN FROM USER WHERE NOT USERTYPENAME = 'SUPER' AND PIN = " + pin;
   let result = await window.api.selectData(query);
   return !isEmptyArray(result);
 }
